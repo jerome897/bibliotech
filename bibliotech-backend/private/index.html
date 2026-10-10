@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BiblioTech | Archivo Central</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="/tailwind.css" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+</head>
+<body class="bg-surface text-on-surface font-body-md">
+
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between">
+  <div class="flex flex-col">
+    <div class="h-16 flex items-center gap-3 px-space-lg">
+      <span class="material-symbols-outlined text-primary text-3xl">local_library</span>
+      <div class="flex flex-col">
+        <span class="font-headline-sm text-headline-sm text-primary leading-none">BiblioTech</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mt-0.5">Archivo Central</span>
+      </div>
+    </div>
+    <div class="px-space-md py-space-sm">
+      <nav class="flex flex-col gap-1">
+        <a class="flex items-center gap-3 px-space-md py-2.5 rounded-lg" data-page="dashboard" href="#dashboard"><span class="material-symbols-outlined text-lg">dashboard</span><span class="font-label-md text-label-md">Dashboard</span></a>
+        <a class="flex items-center gap-3 px-space-md py-2.5 rounded-lg" data-page="catalogo-de-libros" href="#catalogo-de-libros"><span class="material-symbols-outlined text-lg">menu_book</span><span class="font-label-md text-label-md">Catálogo de Libros</span></a>
+        <a class="flex items-center gap-3 px-space-md py-2.5 rounded-lg" data-page="lectores" href="#lectores"><span class="material-symbols-outlined text-lg">groups</span><span class="font-label-md text-label-md">Lectores</span></a>
+        <a class="flex items-center gap-3 px-space-md py-2.5 rounded-lg" data-page="prestamos-y-devoluciones" href="#prestamos-y-devoluciones"><span class="material-symbols-outlined text-lg">sync_alt</span><span class="font-label-md text-label-md">Préstamos y Devoluciones</span></a>
+        <a class="flex items-center gap-3 px-space-md py-2.5 rounded-lg" data-page="reportes-y-estadisticas" href="#reportes-y-estadisticas"><span class="material-symbols-outlined text-lg">analytics</span><span class="font-label-md text-label-md">Reportes y Estadísticas</span></a>
+        <a class="flex items-center gap-3 px-space-md py-2.5 rounded-lg" data-page="configuracion" href="#configuracion"><span class="material-symbols-outlined text-lg">settings</span><span class="font-label-md text-label-md">Configuración</span></a>
+      </nav>
+    </div>
+  </div>
+  <div class="p-space-md m-space-md rounded-xl bg-surface-container-low flex flex-col gap-2">
+    <div class="flex items-center justify-between">
+      <span class="font-label-sm text-label-sm text-on-surface-variant">Ejemplares disponibles</span>
+      <span class="font-code-sm text-code-sm text-primary font-semibold" id="sideAvailPct">0%</span>
+    </div>
+    <div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary rounded-full" id="sideAvailBar" style="width:0%"></div></div>
+    <span class="font-body-sm text-body-sm text-on-surface-variant" id="sideAvailTxt"></span>
+  </div>
+</aside>
+
+<div class="pl-64 flex flex-col min-h-screen">
+  <header class="fixed top-0 left-64 right-0 h-16 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg">
+    <div class="flex items-center gap-4 flex-1 max-w-xl relative">
+      <div class="relative w-full flex items-center">
+        <span class="material-symbols-outlined absolute left-3 text-outline text-lg pointer-events-none">search</span>
+        <input autocomplete="off" class="w-full h-10 pl-9 pr-14 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm" id="globalSearch" placeholder="Buscar libros por título, autor, ISBN o signatura..." type="text"/>
+        <kbd class="absolute right-3 px-1.5 py-0.5 font-code-sm text-code-sm text-outline bg-surface-container rounded">Ctrl K</kbd>
+      </div>
+      <div class="hidden absolute top-12 left-0 right-0 bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden max-h-96 overflow-y-auto" id="searchResults"></div>
+    </div>
+    <div class="flex items-center gap-space-md">
+      <button class="flex items-center gap-2 h-10 px-space-md rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-colors shadow-sm active:scale-95" data-action="new-loan" type="button"><span class="material-symbols-outlined text-base">add</span><span>Nuevo Préstamo</span></button>
+      <div class="relative">
+        <button class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-action="toggle-notifs" type="button">
+          <span class="material-symbols-outlined text-xl">notifications</span>
+          <span class="hidden absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 bg-error text-on-error rounded-full text-[10px] leading-tight flex items-center justify-center font-bold" id="notifBadge">0</span>
+        </button>
+        <div class="hidden absolute right-0 top-12 w-96 max-w-[90vw] bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden" id="notifPanel"></div>
+      </div>
+      <div class="h-6 w-[1px] bg-outline-variant/40 mx-1"></div>
+      <button class="flex items-center gap-3 pl-1 text-left" data-action="nav" data-page="configuracion" type="button">
+        <span class="w-8 h-8 rounded-full overflow-hidden bg-primary-fixed text-primary flex items-center justify-center font-headline-sm text-label-md font-semibold" id="hdrAvatar"></span>
+        <span class="flex flex-col">
+          <span class="font-label-md text-label-md text-on-surface font-semibold leading-snug" id="hdrName"></span>
+          <span class="font-label-sm text-label-sm text-tertiary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>En línea</span>
+        </span>
+      </button>
+      <button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-action="logout" title="Cerrar sesión" type="button"><span class="material-symbols-outlined text-xl">logout</span></button>
+    </div>
+  </header>
+
+  <main class="w-full pt-16 px-space-lg pb-space-xl bg-surface flex-1" id="view"></main>
+</div>
+
+<div class="hidden fixed inset-0 z-[60] bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-4" id="modalBackdrop">
+  <div class="bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-2xl max-h-[92vh] overflow-y-auto" id="modalBox"></div>
+</div>
+<div class="fixed bottom-6 right-6 z-[70] flex flex-col gap-2 pointer-events-none" id="toasts"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
