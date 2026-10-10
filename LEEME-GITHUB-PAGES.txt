@@ -1,0 +1,16 @@
+# BiblioTech — versión para GitHub Pages
+
+## Publicar desde GitHub Pages (sin Render ni servicios de backend)
+1. Descomprime este ZIP.
+2. Sube **el contenido** de esta carpeta a la raíz del repositorio `bibliotech` (no la carpeta contenedora). Debes ver `index.html`, `login.html`, `app.js`, `styles.css` y `tailwind.css` directamente en la pestaña Code.
+3. En GitHub abre **Settings → Pages**.
+4. En **Build and deployment**, selecciona **Deploy from a branch**.
+5. Elige la rama `main` y la carpeta `/(root)`, y pulsa **Save**.
+6. Espera unos minutos y abre `https://jerome897.github.io/bibliotech/`.
+
+## Limitaciones importantes
+GitHub Pages solo sirve archivos estáticos. Esta versión reemplaza la API de Node.js/SQLite por almacenamiento local del navegador (`localStorage`) para que la interfaz y sus operaciones básicas puedan probarse sin servidor. Los datos quedan en ese navegador y dispositivo; no se sincronizan entre usuarios ni equipos. Si borras los datos del navegador, puedes perderlos.
+
+El inicio de sesión es únicamente una pantalla de demostración: **no es una medida de seguridad** y no protege datos. No uses datos personales reales ni publiques información confidencial. El cambio de contraseña no crea autenticación real. Las fuentes e iconos externos pueden requerir conexión a Internet.
+
+Para volver a empezar con los datos de ejemplo, entra a Configuración y utiliza la opción de restaurar datos de ejemplo si está disponible.
